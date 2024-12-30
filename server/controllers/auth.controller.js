@@ -69,9 +69,7 @@ export const Signup = async (req, res) => {
 
         <p style="font-size: 14px; color: #666;">This OTP is valid for the next 10 minutes.</p>
         
-        <a href="https://jerseynation.onrender.com/otp-confirmation" style="display: inline-block; background-color:rgb(195, 248, 229); color:rgb(0, 0, 0); padding: 10px 20px; border-radius: 5px; font-size: 16px; text-decoration: none; margin-top: 20px;">
-          Confirm OTP
-        </a>
+       
       </section>
 
       <!-- Benefits Section -->
@@ -213,7 +211,7 @@ export const ResetPasswordAttempt = async (req, res) => {
           If you made this request, click the button below to reset your password. If you didn't make this request, you can ignore this email.
         </p>
 
-        <a href="http://localhost:5173/reset-password/${token}" style="display: inline-block; background-color: rgb(0, 123, 255); color: #ffffff; padding: 12px 25px; border-radius: 5px; font-size: 16px; text-decoration: none; margin-top: 20px;">
+        <a href="https://bulletin-is7s.onrender.com/reset-password/${token}" style="display: inline-block; background-color: rgb(0, 123, 255); color: #ffffff; padding: 12px 25px; border-radius: 5px; font-size: 16px; text-decoration: none; margin-top: 20px;">
           Reset Your Password
         </a>
         
@@ -309,7 +307,7 @@ export const confirmPassword = async (req, res) => {
           <li style="padding: 10px 0; border-bottom: 1px solid #ddd;">⚽ Stay updated with exclusive offers and discounts</li>
         </ul>
         
-        <a href="https://jerseynation.onrender.com/shop" style="display: inline-block; background-color: rgb(0, 255, 162); color: #ffffff; padding: 10px 20px; border-radius: 5px; font-size: 16px; text-decoration: none; margin-top: 20px;">
+        <a href="https://bulletin-is7s.onrender.com" style="display: inline-block; background-color: rgb(0, 255, 162); color: #ffffff; padding: 10px 20px; border-radius: 5px; font-size: 16px; text-decoration: none; margin-top: 20px;">
           Start Shopping
         </a>
       </section>
