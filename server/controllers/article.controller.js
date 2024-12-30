@@ -77,9 +77,12 @@ export const getAllArticles = async (req, res) => {
 };
 
 export const deleteArticle = async (req, res) => {
+  console.log(req.user._id);
   try {
     const content = await EditorContent.findById(req.params.id);
-    if (content.postedBy != req.user._id) {
+
+    console.log(content.postedBy);
+    if (content.postedBy.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
         message: "You are not authorized to delete this content",

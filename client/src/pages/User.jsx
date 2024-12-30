@@ -1,13 +1,39 @@
 import React, { useContext, useEffect } from "react";
 import { ContextStore } from "../context/ContextStore";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { CiLogout } from "react-icons/ci";
+import { TbEditOff } from "react-icons/tb";
+import { formatDistanceToNow } from "date-fns";
+import { MdDeleteOutline } from "react-icons/md";
 
 const User = () => {
   const { userDetails, serverUrl } = useContext(ContextStore);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const truncateText = (text = "", limit = 100) => {
+    return text.length > limit ? text.substring(0, limit) + "..." : text;
+  };
+
+  const userArticles = useQuery({
+    queryKey: ["userarticles"],
+    queryFn: async () => {
+      const response = await axios.get(
+        `${serverUrl}/api/v1/article/all-article`
+      );
+      return response.data;
+    },
+  });
+  // console.log(userArticles?.data?.data);
+
+  const articlesCreatedByUser = userArticles?.data?.data.filter((art, inde) => {
+    return art.postedBy === userDetails._id;
+  });
+
+  console.log(articlesCreatedByUser);
 
   // console.log(userDetails);
 
@@ -21,6 +47,7 @@ const User = () => {
       return response.data;
     },
   });
+  // console.log();
 
   useEffect(() => {
     if (!userDetails) {
@@ -44,6 +71,27 @@ const User = () => {
     },
   });
 
+  // delete handler
+  const deleteMutation = useMutation({
+    mutationKey: ["articles"],
+    mutationFn: async (id) => {
+      const response = await axios.delete(
+        `${serverUrl}/api/v1/article/single/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data;
+    },
+    onSuccess: (data) => {
+      console.log("Success:", data);
+      queryClient.invalidateQueries(["userarticles", "articles"]);
+    },
+    onError: (error) => {
+      console.error("Error:", error.response?.data || error.message);
+    },
+  });
+
   const handleLogout = () => {
     logoutMutation.mutate();
     localStorage.removeItem("user");
@@ -55,24 +103,109 @@ const User = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className="p-4 min-h-screen"
+      className="p-2 min-h-screen"
     >
-      <h1>User Details</h1>
       {userDetails && (
         <div className="">
-          <p>Name: {userDetails.name}</p>
-          <p>Email: {userDetails.email}</p>
+          <div className=" flex items-center gap-2 justify-between">
+            <div className="size-20  rounded-full   overflow-hidden">
+              <img src="./user.png" alt="" className="" />
+            </div>
+            <div>0 Articles</div>
+            <div>0 Followers</div>
+            <div>0 Following</div>
+          </div>
+          <hr className="my-2" />
+
+          <p>{userDetails.name}</p>
+          <p>{userDetails.email}</p>
           <p>Verified: {userDetails.isVerified ? "True" : "False"}</p>
+
           {/* Add other fields from `data` that are available */}
         </div>
       )}
-      <div
-        className="p-2 bg-red-500 hover:bg-red-600 cursor-pointer w-32 text-white text-center mt-4 rounded "
-        onClick={() => {
-          handleLogout();
-        }}
-      >
-        Logout
+
+      <div className="flex items-center justify-between">
+        <div
+          className="p-2 bg-emerald-500 hover:bg-emerald-600 cursor-pointer w-[49%] md:w-32 text-white text-center mt-4 rounded flex items-center gap-2 justify-center"
+          onClick={() => {}}
+        >
+          <TbEditOff /> Edit Profile
+        </div>{" "}
+        <div
+          className="p-2 bg-red-500 hover:bg-red-600 cursor-pointer  w-[49%] md:w-32 text-white text-center mt-4 rounded flex items-center gap-2 justify-center"
+          onClick={() => {
+            handleLogout();
+          }}
+        >
+          <CiLogout /> Logout
+        </div>
+      </div>
+
+      <hr className="my-2" />
+      <div className="flex items-center justify-between">
+        <p className="p-1 bg-gray-100 w-[49%] md:w-32 flex items-center justify-center rounded">
+          Your Articles
+        </p>
+        {/* <p className="p-1 bg-gray-100 w-[49%] md:w-32 flex items-center justify-center">
+          Saved Articles
+        </p> */}
+
+        {/* Add other posts */}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-3">
+        {articlesCreatedByUser?.map((article) => (
+          <div
+            key={article._id}
+            className="rounded-lg p-4 border shadow-sm hover:shadow-md   bg-white cursor-pointer transition-shadow duration-200"
+          >
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold mb-2 text-gray-500">
+                {article.type}
+              </h2>
+              <p className="text-sm text-emerald-600">
+                {formatDistanceToNow(new Date(article.createdAt), {
+                  addSuffix: true,
+                })}
+              </p>
+            </div>
+            <div className="flex items-center justify-between flex-wrap my-2 ">
+              <h2
+                className="text-2xl font-semibold mb-2"
+                onClick={() => {
+                  navigate(`/articles/${article._id}`);
+                }}
+              >
+                {article.title}
+              </h2>
+              <MdDeleteOutline
+                className="text-xl hover:text-red-500"
+                onClick={() => {
+                  const canDelete = confirm(
+                    "Do You want to delete this article?"
+                  );
+                  if (canDelete) {
+                    deleteMutation.mutate(article._id);
+                  }
+                }}
+              />
+            </div>
+            <div className="space-y-3 text-gray-500">
+              {article.blocks?.length ? (
+                article.blocks.map(
+                  (block, index) =>
+                    index === 0 && (
+                      <p key={block.id} className="text-gray-400">
+                        {truncateText(block.data.text, 100)}
+                      </p>
+                    )
+                )
+              ) : (
+                <p className="text-gray-500">No content available</p>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </motion.div>
   );

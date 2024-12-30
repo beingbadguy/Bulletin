@@ -82,7 +82,7 @@ const SingleArticle = () => {
           All Articles
         </p>
         <MdOutlineKeyboardArrowRight />
-        <p className="text-red-500">{article.title}</p>
+        <p className="text-red-500">{article.title.slice(0, 13) + "..."}</p>
       </div>
 
       {/* Article details */}

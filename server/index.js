@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: "https://bulletin-is7s.onrender.com",
+    origin: ["http://localhost:5173", "https://bulletin-is7s.onrender.com"],
     credentials: true,
   })
 );

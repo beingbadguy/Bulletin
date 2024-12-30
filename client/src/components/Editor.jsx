@@ -70,7 +70,9 @@ const Editor = () => {
 
     // Cleanup the editor when the component unmounts
     return () => {
-      //   editor.destroy();
+      // if (editorInstance) {
+      //   editorInstance.destroy();
+      // }
     };
   }, []);
 
@@ -111,7 +113,7 @@ const Editor = () => {
       />
       {error && <p className="text-red-500 ml-2 md:ml-7">{error}</p>}
       <select
-        className="mt-16 ml-2 md:mt-16 md:ml-7 cursor-pointer outline-none"
+        className="mt-20 ml-2 md:mt-24 md:ml-7 cursor-pointer outline-none"
         name="category"
         onChange={(e) => {
           setType(e.target.value); // Updates the type state with the selected value
@@ -128,7 +130,7 @@ const Editor = () => {
 
       <div
         ref={editorRef}
-        className="mt-16 mx-auto max-w-[90%] sm:max-w-[80%] md:mt-32"
+        className="mt-16 mx-auto max-w-[95%] sm:max-w-[80%]  bg-gray-100 p-2"
       ></div>
 
       <button
