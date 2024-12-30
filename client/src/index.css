@@ -1,0 +1,38 @@
+* {
+  font-family: "Satoshi", sans-serif;
+  font-family: "Supreme", sans-serif;
+  font-family: "Boska", serif;
+  font-family: "Synonym", sans-serif;
+  font-family: "Telma", cursive;
+  font-family: "Gambetta", serif;
+  font-family: "RX100", sans-serif;
+  font-family: "Clash Grotesk", sans-serif;
+  user-select: none;
+}
+/* body {
+  overflow-x: hidden;
+} */
+
+/* For modern browsers */
+::-webkit-scrollbar {
+  width: 20px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: red; /* Background of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: green; /* Color of the scrollbar thumb */
+  border-radius: 5px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: blue; /* Color on hover for the thumb */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: #10b981 #a7f3d0; /* thumb color track color */
+}
