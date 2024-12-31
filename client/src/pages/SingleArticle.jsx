@@ -39,9 +39,6 @@ const SingleArticle = () => {
     }
   });
 
-  // console.log(userDetails._id);
-  // console.log(data?.data?.postedBy);
-
   const userdata = useQuery({
     queryKey: ["userData"],
     queryFn: async () => {
@@ -52,33 +49,20 @@ const SingleArticle = () => {
     },
   });
 
-  // console.log(userdata?.data?.user);
-
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   const article = data.data;
-  // console.log(article.createdAt);
 
   return (
     <div className="min-h-[85vh]">
       {/* Breadcrumb navigation */}
       <div className="flex items-center gap-1 p-4">
-        <p
-          className="cursor-pointer text-xl"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
+        <p className="cursor-pointer text-xl" onClick={() => navigate("/")}>
           <TbSmartHome />
         </p>
         <MdOutlineKeyboardArrowRight />
-        <p
-          className="cursor-pointer"
-          onClick={() => {
-            navigate("/articles");
-          }}
-        >
+        <p className="cursor-pointer" onClick={() => navigate("/articles")}>
           All Articles
         </p>
         <MdOutlineKeyboardArrowRight />
@@ -109,43 +93,93 @@ const SingleArticle = () => {
 
         {/* Render blocks */}
         <div className="article-content">
-          {article.blocks.map((block) => {
-            switch (block.type) {
-              case "paragraph":
-                return (
-                  <p key={block.id} className="mb-4 text-lg">
-                    {block.data.text}
-                  </p>
-                );
-              case "header":
-                return (
-                  <h3 key={block.id} className="text-xl font-semibold mb-4">
-                    {block.data.text}
-                  </h3>
-                );
-              case "list":
-                return (
-                  <ul
-                    key={block.id}
-                    className={`list-disc pl-6 mb-4 ${
-                      block.data.style === "ordered" ? "list-decimal" : ""
-                    }`}
-                  >
-                    {block.data.items.map((item, index) => (
-                      <li key={index} className="mb-2">
-                        {item.content}
-                      </li>
-                    ))}
-                  </ul>
-                );
-              default:
-                return null;
-            }
-          })}
+          {article.blocks.map((block) => renderBlockContent(block))}
         </div>
       </motion.div>
     </div>
   );
+};
+
+// Helper function to render each block of content with styling
+const renderBlockContent = (block) => {
+  switch (block.type) {
+    case "paragraph":
+      return (
+        <p key={block.id} className="mb-4 text-lg">
+          {parseStyles(block.data.text)}
+        </p>
+      );
+    case "header":
+      return (
+        <h3 key={block.id} className="text-xl font-semibold mb-4">
+          {parseStyles(block.data.text)}
+        </h3>
+      );
+    case "list":
+      return (
+        <ul
+          key={block.id}
+          className={`list-disc pl-6 mb-4 ${
+            block.data.style === "ordered" ? "list-decimal" : ""
+          }`}
+        >
+          {block.data.items.map((item, index) => (
+            <li key={index} className="mb-2">
+              {parseStyles(item.content)}
+            </li>
+          ))}
+        </ul>
+      );
+    case "code":
+      return (
+        <pre key={block.id} className="bg-gray-200 p-2 my-4">
+          <code>{block.data.code}</code>
+        </pre>
+      );
+    case "marker":
+      return (
+        <mark key={block.id} className="bg-yellow-300">
+          {block.data.text}
+        </mark>
+      );
+    case "inlineCode":
+      return (
+        <code key={block.id} className="bg-gray-100 p-1">
+          {block.data.text}
+        </code>
+      );
+    case "link":
+      return (
+        <a
+          key={block.id}
+          href={block.data.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 underline"
+        >
+          {block.data.meta?.title || block.data.link}
+        </a>
+      );
+    case "delimiter":
+      return <hr key={block.id} className="my-6" />;
+    default:
+      return null;
+  }
+};
+
+// Helper function to parse and handle styles like bold, italic, etc.
+const parseStyles = (text) => {
+  if (!text) return null;
+
+  // Handle **bold** -> <strong>bold</strong>
+  text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+  // Handle *italic* -> <em>italic</em>
+  text = text.replace(/\*(.*?)\*/g, "<em>$1</em>");
+  // Handle inline code `code` -> <code>code</code>
+  text = text.replace(/`(.*?)`/g, "<code>$1</code>");
+
+  // Render the text with parsed HTML
+  return <span dangerouslySetInnerHTML={{ __html: text }} />;
 };
 
 export default SingleArticle;

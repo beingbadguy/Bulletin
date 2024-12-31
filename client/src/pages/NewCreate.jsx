@@ -70,11 +70,11 @@ function NewCreate() {
     }
   };
   // console.log(userDetails);
-  useEffect(() => {
-    if (!userDetails?.name) {
-      navigate("/login");
-    }
-  }, [userDetails]);
+//   useEffect(() => {
+//     if (!userDetails?.name) {
+//       navigate("/login");
+//     }
+//   }, [userDetails]);
 
   return (
     <div className="min-h-screen p-2">
@@ -82,11 +82,11 @@ function NewCreate() {
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="absolute top-[100px] left-[2%]   w-[80%] border-b text-xl outline-none"
+        className="absolute top-[100px] left-[2%]   w-[95%] border-b text-xl outline-none"
         placeholder="Enter Title"
       />
       <select
-        className="mt-20 ml-2 md:mt-24 md:ml-7 cursor-pointer outline-none"
+        className="mt-20 md:mt-24 md:ml-7 cursor-pointer outline-none"
         name="category"
         onChange={(e) => {
           setType(e.target.value); // Updates the type state with the selected value
@@ -102,7 +102,7 @@ function NewCreate() {
       </select>
 
       {/* editor area  */}
-      <div className="editor mt-4">
+      <div className="p-4 mt-4 bg-gray-50">
         <NewEditor
           data={data}
           onChange={setData}

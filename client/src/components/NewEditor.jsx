@@ -11,6 +11,7 @@ const NewEditor = ({ data, onChange, editorBlock }) => {
         holder: editorBlock,
         data: data,
         tools: EDITOR_JS_TOOLS,
+        inlineToolbar: true,
         async onChange(api, event) {
           const data = await api.saver.save();
           onChange(data);
