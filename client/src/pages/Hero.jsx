@@ -98,12 +98,12 @@ const Hero = () => {
       </div>
 
       {/* Search Result Overlay */}
-      {searchResult && searchTerm.length > 2 && (
+      {searchResult && searchTerm.length > 1 && (
         <div
           className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9099999]"
           onClick={() => setSearchResult(null)}
         >
-          <div className="bg-white p-6 rounded-lg w-full max-w-xl overflow-auto mx-6 ">
+          <div className="bg-white p-6 rounded-lg md:w-full max-w-xl overflow-auto mx-6 absolute top-[100px] md:static ">
             <div className="border border-gray-400 rounded-md flex items-center justify-start w- z-[9999] bg-white">
               <IoIosSearch className="text-2xl ml-2 text-gray-400" />
               <input
@@ -112,17 +112,18 @@ const Hero = () => {
                 onChange={handleSearch}
                 onClick={(e) => e.stopPropagation()}
                 placeholder="Search articles"
-                className="p-4 outline-none w-[100%] rounded-xl"
+                className="p-2 outline-none w-[100%] rounded-xl"
               />
             </div>
             {/* <h2 className="text-xl text-center font-bold mb-4">
               Search Results
             </h2> */}
-            <div className="grid grid-cols-1 gap-4 mt-4">
+            <div className="grid grid-cols-1 gap-1 mt-4  max-h-[78px] overflow-y-scroll">
+              
               {searchResult.length > 0 ? (
                 searchResult.map((article) => (
                   <div
-                    key={article.id}
+                    key={article._id}
                     className="hover:bg-gray-50  rounded cursor-pointer"
                     onClick={() => navigate(`/articles/${article._id}`)}
                   >
@@ -131,10 +132,10 @@ const Hero = () => {
                   </div>
                 ))
               ) : (
-                <div className="text-center">
-                  <p>No results found. Try searching for something else.</p>
+                <div className="text-center ">
+                  <p>No results found. Try something else.</p>
                   <button
-                    className="mt-4 p-2 bg-emerald-600 text-white rounded hover:bg-emerald-700"
+                    className="mt-1 p-2 bg-emerald-600 text-white rounded hover:bg-emerald-700"
                     onClick={() => navigate("/articles")}
                   >
                     See All Articles
