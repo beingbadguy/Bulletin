@@ -19,6 +19,7 @@ import SingleArticle from "./pages/SingleArticle.jsx";
 import Newsletter from "./pages/Newsletter.jsx";
 import Create from "./pages/Create.jsx";
 import Error from "./pages/Error.jsx";
+import NewCreate from "./pages/NewCreate.jsx";
 
 const router = createBrowserRouter([
   {
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
       },
       {
         path: "write",
-        element: <Create />,
+        element: <NewCreate />,
       },
       {
         path: "user",
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
         path: "success",
         element: <PasswordChangeConfirmPage />,
       },
+      // {
+      //   path: "new",
+      //   element: <NewCreate />,
+      // },
       {
         path: "*",
         element: <Error />,
