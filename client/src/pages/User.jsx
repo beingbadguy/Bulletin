@@ -169,6 +169,9 @@ const User = () => {
             <div
               key={article._id}
               className="rounded-lg p-4 border shadow-sm hover:shadow-md   bg-white cursor-pointer transition-shadow duration-200"
+              onClick={() => {
+                navigate(`/articles/${article._id}`);
+              }}
             >
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold mb-2 text-gray-500">
@@ -181,17 +184,11 @@ const User = () => {
                 </p>
               </div>
               <div className="flex items-center justify-between flex-wrap my-2 ">
-                <h2
-                  className="text-2xl font-semibold mb-2"
-                  onClick={() => {
-                    navigate(`/articles/${article._id}`);
-                  }}
-                >
-                  {article.title}
-                </h2>
+                <h2 className="text-2xl font-semibold mb-2">{article.title}</h2>
                 <MdDeleteOutline
                   className="text-xl hover:text-red-500"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     const canDelete = confirm(
                       "Do You want to delete this article?"
                     );
