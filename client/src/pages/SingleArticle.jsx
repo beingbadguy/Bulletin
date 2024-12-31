@@ -6,17 +6,43 @@ import {
 import { TbSmartHome } from "react-icons/tb";
 import { useNavigate, useParams } from "react-router-dom";
 import { ContextStore } from "../context/ContextStore";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
+import { HiOutlineSaveAs } from "react-icons/hi";
+import { AiOutlineLoading } from "react-icons/ai";
+import { BsSave2 } from "react-icons/bs";
+import { BsSave2Fill } from "react-icons/bs";
+import { CiBookmark } from "react-icons/ci";
+import { ToastContainer, toast } from "react-toastify";
 
 const SingleArticle = () => {
   const { serverUrl, userDetails } = useContext(ContextStore);
   const navigate = useNavigate();
   const { id } = useParams();
+  const queryClient = useQueryClient();
 
-  const [canDelete, setCanDelete] = useState(null);
+  const saveMutation = useMutation({
+    mutationFn: async (id) => {
+      const response = await axios.post(
+        `${serverUrl}/api/v1/article/save/${id}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data;
+    },
+    onSuccess: (data) => {
+      console.log("Success:", data);
+      toast.success("Article saved successfully!");
+      queryClient.invalidateQueries(["userdata"]);
+    },
+    onError: (error) => {
+      console.error("Error:", error.response?.data || error.message);
+    },
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,12 +59,6 @@ const SingleArticle = () => {
     },
   });
 
-  useEffect(() => {
-    if (userDetails && userDetails._id === data?.data?.postedBy) {
-      setCanDelete(true);
-    }
-  });
-
   const userdata = useQuery({
     queryKey: ["userData"],
     queryFn: async () => {
@@ -48,8 +68,14 @@ const SingleArticle = () => {
       return response.data;
     },
   });
+  console.log(userdata?.data?.user);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <AiOutlineLoading className="animate-spin text-emerald-500" />
+      </div>
+    );
   if (error) return <div>Error: {error.message}</div>;
 
   const article = data.data;
@@ -57,16 +83,27 @@ const SingleArticle = () => {
   return (
     <div className="min-h-[85vh]">
       {/* Breadcrumb navigation */}
-      <div className="flex items-center gap-1 p-4">
-        <p className="cursor-pointer text-xl" onClick={() => navigate("/")}>
-          <TbSmartHome />
-        </p>
-        <MdOutlineKeyboardArrowRight />
-        <p className="cursor-pointer" onClick={() => navigate("/articles")}>
-          All Articles
-        </p>
-        <MdOutlineKeyboardArrowRight />
-        <p className="text-red-500">{article.title.slice(0, 13) + "..."}</p>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1 p-4">
+          <p className="cursor-pointer text-xl" onClick={() => navigate("/")}>
+            <TbSmartHome />
+          </p>
+          <MdOutlineKeyboardArrowRight />
+          <p className="cursor-pointer" onClick={() => navigate("/articles")}>
+            All Articles
+          </p>
+          <MdOutlineKeyboardArrowRight />
+          <p className="text-red-500">{article.title.slice(0, 13) + "..."}</p>
+        </div>
+        <div className="p-2">
+          <CiBookmark
+            className=" cursor-pointer  size-6"
+            onClick={() => {
+              saveMutation.mutate(article._id); // Trigger save mutation
+            }}
+          />
+          <ToastContainer position="bottom-center" />
+        </div>
       </div>
 
       {/* Article details */}
