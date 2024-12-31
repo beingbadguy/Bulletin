@@ -103,16 +103,27 @@ const Hero = () => {
           className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9099999]"
           onClick={() => setSearchResult(null)}
         >
-          <div className="bg-white p-6 rounded-lg w-full max-w-xl overflow-auto mx-6 mt-[300px]">
-            <h2 className="text-xl text-center font-bold mb-4">
+          <div className="bg-white p-6 rounded-lg w-full max-w-xl overflow-auto mx-6 ">
+            <div className="border border-gray-400 rounded-md flex items-center justify-start w- z-[9999] bg-white">
+              <IoIosSearch className="text-2xl ml-2 text-gray-400" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={handleSearch}
+                onClick={(e) => e.stopPropagation()}
+                placeholder="Search articles"
+                className="p-4 outline-none w-[100%] rounded-xl"
+              />
+            </div>
+            {/* <h2 className="text-xl text-center font-bold mb-4">
               Search Results
-            </h2>
-            <div className="grid grid-cols-1 gap-4">
+            </h2> */}
+            <div className="grid grid-cols-1 gap-4 mt-4">
               {searchResult.length > 0 ? (
                 searchResult.map((article) => (
                   <div
                     key={article.id}
-                    className="border border-gray-400 p-4 rounded cursor-pointer"
+                    className="hover:bg-gray-50  rounded cursor-pointer"
                     onClick={() => navigate(`/articles/${article._id}`)}
                   >
                     <h3>{article.title}</h3>
@@ -150,7 +161,7 @@ const Hero = () => {
       <img
         src="https://images.unsplash.com/photo-1496381273223-e4ad4e99f5b6?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt=""
-        className="size-[200px] rounded object-cover absolute left-[15%] top-[35%] hidden xl:block"
+        className="size-[200px] rounded object-cover absolute left-[14%] top-[35%] hidden xl:block"
       />
 
       {/* right  */}
