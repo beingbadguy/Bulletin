@@ -35,7 +35,7 @@ const SingleArticle = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("Success:", data);
+      // console.log("Success:", data);
       toast.success("Article saved successfully!");
       queryClient.invalidateQueries(["userdata"]);
     },
@@ -68,7 +68,7 @@ const SingleArticle = () => {
       return response.data;
     },
   });
-  console.log(userdata?.data?.user);
+  // console.log(userdata?.data?.user);
 
   if (isLoading)
     return (

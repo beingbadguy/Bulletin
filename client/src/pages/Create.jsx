@@ -3,7 +3,7 @@ import Editor from "../components/Editor";
 
 const Create = () => {
   const { serverUrl, userDetails } = useContext(ContextStore);
-  console.log(userDetails);
+  // console.log(userDetails);
 
   useEffect(() => {
     if (!userDetails) {

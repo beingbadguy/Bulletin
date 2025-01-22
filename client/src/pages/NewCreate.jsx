@@ -45,7 +45,7 @@ function NewCreate() {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("Content saved:", data);
+      // console.log("Content saved:", data);
       setError("");
       navigate(`/articles`);
     },
@@ -69,7 +69,7 @@ function NewCreate() {
       setError("Please fill in all required fields.");
     }
   };
-  console.log(userDetails);
+  // console.log(userDetails);
   useEffect(() => {
     if (!userDetails?.name) {
       navigate("/login");
@@ -90,7 +90,7 @@ function NewCreate() {
         name="category"
         onChange={(e) => {
           setType(e.target.value); // Updates the type state with the selected value
-          console.log(e.target.value); // Logs the selected value
+          // console.log(e.target.value); // Logs the selected value
         }}
       >
         <option value="">Select Type</option>

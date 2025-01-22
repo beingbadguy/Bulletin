@@ -10,7 +10,7 @@ import { HiOutlineEye } from "react-icons/hi";
 const Signup = () => {
   const { serverUrl, setTempMail, tempmail, isAuth, setIsAuth, userDetails } =
     useContext(ContextStore);
-  console.log(userDetails);
+  // console.log(userDetails);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [showPassword, setShowPassword] = useState(null);
@@ -48,7 +48,7 @@ const Signup = () => {
       return response.data; // Assuming the response contains the result in `data`
     },
     onSuccess: (data) => {
-      console.log("Success:", data);
+      // console.log("Success:", data);
       setIsAuth(true);
       navigate("/verify");
     },

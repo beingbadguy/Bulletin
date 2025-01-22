@@ -25,7 +25,7 @@ const Article = () => {
       return response.data;
     },
   });
-  console.log(data?.data);
+  // console.log(data?.data);
 
   return (
     <motion.div

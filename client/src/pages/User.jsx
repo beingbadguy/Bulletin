@@ -63,7 +63,7 @@ const User = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("Success:", data);
+      // console.log("Success:", data);
     },
     onError: (error) => {
       console.error("Error:", error.response?.data || error.message);
@@ -83,7 +83,7 @@ const User = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("Success:", data);
+      // console.log("Success:", data);
       queryClient.invalidateQueries(["userarticles", "articles"]);
     },
     onError: (error) => {

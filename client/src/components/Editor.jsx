@@ -39,7 +39,7 @@ const Editor = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("Content saved:", data);
+      // console.log("Content saved:", data);
       setError("");
       navigate(`/articles`);
     },
@@ -117,7 +117,7 @@ const Editor = () => {
         name="category"
         onChange={(e) => {
           setType(e.target.value); // Updates the type state with the selected value
-          console.log(e.target.value); // Logs the selected value
+          // console.log(e.target.value); // Logs the selected value
         }}
       >
         <option value="">Select Type</option>

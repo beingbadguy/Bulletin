@@ -23,7 +23,7 @@ const Newsletter = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log(data);
+      // console.log(data);
       setError(data.message);
     },
     onError: (error) => {

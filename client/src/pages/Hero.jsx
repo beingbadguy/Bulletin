@@ -92,7 +92,13 @@ const Hero = () => {
             className="bg-gray-100 p-2 rounded flex items-center gap-2 cursor-pointer"
           >
             {topic.icon}
-            <button>{topic.name}</button>
+            <button
+              onClick={() => {
+                navigate(`/articles`);
+              }}
+            >
+              {topic.name}
+            </button>
           </div>
         ))}
       </div>
@@ -119,12 +125,11 @@ const Hero = () => {
               Search Results
             </h2> */}
             <div className="grid grid-cols-1 gap-1 mt-4  max-h-[78px] overflow-y-scroll">
-              
               {searchResult.length > 0 ? (
                 searchResult.map((article) => (
                   <div
                     key={article._id}
-                    className="hover:bg-gray-50  rounded cursor-pointer"
+                    className="hover:bg-gray-100  rounded cursor-pointer"
                     onClick={() => navigate(`/articles/${article._id}`)}
                   >
                     <h3>{article.title}</h3>

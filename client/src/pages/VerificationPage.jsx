@@ -27,7 +27,7 @@ const VerificationPage = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("Success:", data);
+      // console.log("Success:", data);
     },
     onError: (error) => {
       alert(error.response?.data?.message || "User details not found!");
@@ -47,7 +47,7 @@ const VerificationPage = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("Success:", data);
+      // console.log("Success:", data);
 
       localStorage.setItem("user", JSON.stringify(data.data));
       setUserDetails(data.data);

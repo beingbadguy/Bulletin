@@ -23,7 +23,7 @@ const Forget = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("Success:", data);
+      // console.log("Success:", data);
       setError(data.message);
     },
     onError: (error) => {

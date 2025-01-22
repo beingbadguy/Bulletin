@@ -17,7 +17,7 @@ const Login = () => {
     userDetails,
     setUserDetails,
   } = useContext(ContextStore);
-  console.log(userDetails);
+  // console.log(userDetails);
   const navigate = useNavigate();
 
   const [error, setError] = useState(null);
@@ -56,8 +56,8 @@ const Login = () => {
     },
     onSuccess: (data) => {
       // console.log("Success:", data);
-      console.log(data.data);
-      console.log(user);
+      // console.log(data.data);
+      // console.log(user);
       if (data.data) {
         localStorage.setItem("user", JSON.stringify(data.data));
         setUserDetails(data.data);

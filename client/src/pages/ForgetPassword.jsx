@@ -28,7 +28,7 @@ const ForgetPassword = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("Success:", data);
+      // console.log("Success:", data);
       setError(data.message);
       navigate("/success");
     },
