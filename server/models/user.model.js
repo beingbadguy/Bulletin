@@ -23,23 +23,13 @@ const userSchema = mongoose.Schema(
         "Please enter a valid email address",
       ],
     },
+    saved: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "EditorContent",
+      },
+    ],
 
-    wishlist: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Wishlist",
-      },
-    ],
-    cart: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Cart",
-    },
-    orders: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Order",
-      },
-    ],
     isVerified: {
       type: Boolean,
       default: false,

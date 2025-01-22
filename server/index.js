@@ -6,9 +6,8 @@ import cloudinaryConnect from "./config/cloudinary.js";
 import fileUpload from "express-fileupload";
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
-import wishlistRoutes from "./routes/wishlist.routes.js";
-import bookRoutes from "./routes/book.routes.js";
 import newsletterRoutes from "./routes/newsletter.routes.js";
+import saveRoutes from "./routes/save.routes.js";
 import articleRoutes from "./routes/article.routes.js";
 import dbConnection from "./config/dbConnect.js";
 import cookieParser from "cookie-parser";
@@ -22,7 +21,11 @@ const PORT = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://bulletin-is7s.onrender.com"],
+    origin: [
+      "http://localhost:5173",
+      "https://bulletin-is7s.onrender.com",
+      "http://localhost:5174",
+    ],
     credentials: true,
   })
 );
@@ -39,10 +42,9 @@ app.use(
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
-app.use("/api/v1/wishlist", wishlistRoutes);
-app.use("/api/v1/book", bookRoutes);
 app.use("/api/v1/newsletter", newsletterRoutes);
 app.use("/api/v1/article", articleRoutes);
+app.use("/api/v1/article", saveRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/dist")));

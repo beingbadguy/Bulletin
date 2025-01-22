@@ -69,12 +69,12 @@ function NewCreate() {
       setError("Please fill in all required fields.");
     }
   };
-  // console.log(userDetails);
-//   useEffect(() => {
-//     if (!userDetails?.name) {
-//       navigate("/login");
-//     }
-//   }, [userDetails]);
+  console.log(userDetails);
+  useEffect(() => {
+    if (!userDetails?.name) {
+      navigate("/login");
+    }
+  }, [userDetails]);
 
   return (
     <div className="min-h-screen p-2">
