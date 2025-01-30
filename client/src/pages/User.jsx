@@ -97,6 +97,8 @@ const User = () => {
     window.location.href = "/login";
   };
 
+  // console.log(userDetails);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -105,7 +107,7 @@ const User = () => {
       className="p-2 min-h-screen"
     >
       {userDetails && (
-        <div className="">
+        <div className=" ">
           <div className=" flex items-center gap-2 justify-between">
             <div className="size-20  rounded-full   overflow-hidden">
               <img src="./user.png" alt="" className="" />
@@ -123,13 +125,13 @@ const User = () => {
         </div>
       )}
 
-      <div className="flex items-center justify-between">
-        <div
+      <div className="flex items-center justify-end">
+        {/* <div
           className="p-2 bg-emerald-500 hover:bg-emerald-600 cursor-pointer w-[49%] md:w-32 text-white text-center mt-4 rounded flex items-center gap-2 justify-center"
           onClick={() => {}}
         >
           <TbEditOff /> Edit Profile
-        </div>{" "}
+        </div>{" "} */}
         <div
           className="p-2 bg-red-500 hover:bg-red-600 cursor-pointer  w-[49%] md:w-32 text-white text-center mt-4 rounded flex items-center gap-2 justify-center"
           onClick={() => {
@@ -143,16 +145,16 @@ const User = () => {
       <hr className="my-2" />
       <div className="flex items-center justify-between">
         <p
-          className={`p-1 font-bold w-[49%] md:w-[200px] flex items-center justify-center rounded  cursor-pointer ${
-            ViewUserArticles ? "bg-gray-100" : ""
+          className={`p-1 font-bold   flex items-center justify-center rounded  cursor-pointer italic ${
+            ViewUserArticles ? "text-2xl" : ""
           }`}
           onClick={() => {
             setViewUserArticles(true);
           }}
         >
-          Your Articles
+          Your Articles ({articlesCreatedByUser?.length || 0})
         </p>
-        <p
+        {/* <p
           className={`p-1 font-bold w-[49%] md:w-[200px] flex items-center justify-center rounded  cursor-pointer ${
             ViewUserArticles ? "" : "bg-gray-100"
           }`}
@@ -161,7 +163,7 @@ const User = () => {
           }}
         >
           Saved Articles
-        </p>
+        </p> */}
       </div>
       {ViewUserArticles ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-3">

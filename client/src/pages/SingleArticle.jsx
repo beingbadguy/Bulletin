@@ -95,7 +95,7 @@ const SingleArticle = () => {
           <MdOutlineKeyboardArrowRight />
           <p className="text-red-500">{article.title.slice(0, 13) + "..."}</p>
         </div>
-        <div className="p-2">
+        {/* <div className="p-2">
           <CiBookmark
             className=" cursor-pointer  size-6"
             onClick={() => {
@@ -103,7 +103,7 @@ const SingleArticle = () => {
             }}
           />
           <ToastContainer position="bottom-center" />
-        </div>
+        </div> */}
       </div>
 
       {/* Article details */}
